@@ -1,48 +1,42 @@
 package com.codurance.chicken_fox_corn;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CornChickenFox {
 
-    private final ArrayList<String> originalBank;
-    private final ArrayList<String> targetBank;
+    private final Bank original;
+    private final Bank target;
 
     public CornChickenFox() {
-        originalBank = new ArrayList<>(Arrays.asList("Farmer", "Chicken", "Corn", "Fox"));
-        targetBank = new ArrayList<>();
+        original = new Bank("Farmer", "Chicken", "Corn", "Fox");
+        target = new Bank();
     }
 
     public ArrayList<String> getOriginalBank() {
-        return originalBank;
+        return original.getItems();
     }
 
     public ArrayList<String> getTargetBank() {
-        return targetBank;
+      return target.getItems();
     }
 
     public boolean move(String item) throws ItemEatenException {
-        if (originalBank.contains("Farmer")) {
-            moveToBank(originalBank, targetBank, item);
+        if (original.hasFarmer()) {
+            moveToBank(original, target, item);
         } else {
-            moveToBank(targetBank, originalBank, item);
+            moveToBank(target, original, item);
         }
 
         return gameState();
     }
 
-    private void moveToBank(ArrayList<String> start, ArrayList<String> finish, String item) {
-        start.remove("Farmer");
-        finish.add("Farmer");
-
-        if (!item.isEmpty()) {
-            start.remove(item);
-            finish.add(item);
-        }
+    private void moveToBank(Bank start, Bank finish, String item) {
+      start.remove(item);
+        finish.add(item);
     }
-2
+
     private boolean gameState() throws ItemEatenException {
-        if (isDangerous(originalBank) || isDangerous(targetBank)) {
+        if (original.isDangerous() || target.isDangerous()) {
             throw new ItemEatenException();
         }
 
@@ -50,14 +44,7 @@ public class CornChickenFox {
     }
 
     private boolean gameWon() {
-        return originalBank.isEmpty()
-                && targetBank.containsAll(Arrays.asList("Farmer", "Corn", "Chicken", "Fox"));
-    }
-
-    private boolean isDangerous(ArrayList<String> bank) {
-        return !bank.contains("Farmer") &&
-                (bank.containsAll(Arrays.asList("Chicken", "Fox")) ||
-                        bank.containsAll(Arrays.asList("Chicken", "Corn")));
-
+        return original.isEmpty()
+                && target.isFull();
     }
 }
