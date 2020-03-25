@@ -17,7 +17,7 @@ public class CornChickenFox {
     }
 
     public ArrayList<String> getTargetBank() {
-      return target.getItems();
+        return target.getItems();
     }
 
     public boolean move(String item) throws ItemEatenException {
@@ -31,7 +31,7 @@ public class CornChickenFox {
     }
 
     private void moveToBank(Bank start, Bank finish, String item) {
-      start.remove(item);
+        start.remove(item);
         finish.add(item);
     }
 
