@@ -66,12 +66,14 @@ public class CornChickenFoxShould {
     }
 
     @Test
-    void allow_winning_path_without_exception() throws ItemEatenException {
-        String[] winningPath = {"Chicken", "", "Fox", "Chicken", "Corn", "", "Chicken"};
+    void return_true_when_game_won() throws ItemEatenException {
+        String[] winningPath = {"Chicken", "", "Corn", "Chicken", "Fox", ""};
 
         for (String item : winningPath) {
             cornChickenFox.move(item);
         }
+
+        assertTrue(cornChickenFox.move("Chicken"));
 
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank);
@@ -82,11 +84,13 @@ public class CornChickenFoxShould {
 
     @Test
     void allow_other_winning_path_without_exception() throws ItemEatenException {
-        String[] winningPath = {"Chicken", "", "Corn", "Chicken", "Fox", "", "Chicken"};
+        String[] winningPath = {"Chicken", "", "Fox", "Chicken", "Corn", ""};
 
         for (String item : winningPath) {
             cornChickenFox.move(item);
         }
+
+        assertTrue(cornChickenFox.move("Chicken"));
 
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank);
