@@ -50,14 +50,14 @@ public class CornChickenFoxShould {
         // Arrange
         CornChickenFox cornChickenFox = new CornChickenFox();
         // Act
-        cornChickenFox.move("Chicken");
+      cornChickenFox.move("Chicken");
         cornChickenFox.move(null);
 
         // Assert
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
         ArrayList<String> targetBank = cornChickenFox.getTargetBank();
 
-        assertEquals(3, originalBank.size());
+      assertEquals(3, originalBank.size());
         assertTrue(originalBank.contains("Corn"));
         assertTrue(originalBank.contains("Fox"));
         assertTrue(originalBank.contains("Farmer"));
