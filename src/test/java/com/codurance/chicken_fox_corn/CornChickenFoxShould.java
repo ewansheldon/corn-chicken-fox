@@ -42,7 +42,7 @@ public class CornChickenFoxShould {
     @Test
     void move_farmer_back_to_original_bank() throws ItemEatenException {
         cornChickenFox.move("Chicken");
-        cornChickenFox.move(null);
+        cornChickenFox.move("");
 
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank, "Corn", "Fox", "Farmer");

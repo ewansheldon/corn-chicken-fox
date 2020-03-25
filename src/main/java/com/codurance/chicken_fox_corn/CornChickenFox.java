@@ -47,7 +47,7 @@ public class CornChickenFox {
         targetBank.remove("Farmer");
         originalBank.add("Farmer");
 
-        if (item != null) {
+        if (!item.isEmpty()) {
             targetBank.remove(item);
             originalBank.add(item);
         }
