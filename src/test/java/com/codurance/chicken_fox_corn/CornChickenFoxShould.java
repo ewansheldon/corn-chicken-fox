@@ -32,12 +32,10 @@ public class CornChickenFoxShould {
     void move_farmer_and_chicken_to_target_bank() throws ItemEatenException {
         cornChickenFox.move("Chicken");
 
-        // Assert
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
-        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
-
         checkBank(originalBank, "Corn", "Fox");
 
+        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
         checkBank(targetBank, "Farmer", "Chicken");
     }
 
@@ -47,17 +45,10 @@ public class CornChickenFoxShould {
         cornChickenFox.move(null);
 
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
-        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
-
         checkBank(originalBank, "Corn", "Fox", "Farmer");
-        checkBank(targetBank, "Chicken");
-    }
 
-    private void checkBank(ArrayList<String> original, String... items) {
-        assertEquals(items.length, original.size());
-        for (String item : items) {
-            assertTrue(original.contains(item));
-        }
+        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        checkBank(targetBank, "Chicken");
     }
 
     @Test
@@ -72,5 +63,12 @@ public class CornChickenFoxShould {
         assertThrows(ItemEatenException.class, () -> {
             cornChickenFox.move("Fox");
         });
+    }
+
+    private void checkBank(ArrayList<String> original, String... items) {
+        assertEquals(items.length, original.size());
+        for (String item : items) {
+            assertTrue(original.contains(item));
+        }
     }
 }
