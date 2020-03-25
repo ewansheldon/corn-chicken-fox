@@ -15,16 +15,11 @@ public class CornChickenFoxShould {
     }
 
     @Test
-    void creates_full_original_bank() {
+    void creates_full_original_bank_and_empty_target_bank() {
         ArrayList<String> original = cornChickenFox.getOriginalBank();
-
         checkBank(original, "Farmer", "Chicken", "Corn", "Fox");
-    }
 
-    @Test
-    void creates_empty_target_bank() {
         ArrayList<String> target = cornChickenFox.getTargetBank();
-
         checkBank(target);
     }
 
@@ -37,6 +32,11 @@ public class CornChickenFoxShould {
 
         ArrayList<String> targetBank = cornChickenFox.getTargetBank();
         checkBank(targetBank, "Farmer", "Chicken");
+    }
+
+    @Test
+    void move_returns_false_if_game_is_not_won() throws ItemEatenException {
+        assertFalse(cornChickenFox.move("Chicken"));
     }
 
     @Test
@@ -63,6 +63,36 @@ public class CornChickenFoxShould {
         assertThrows(ItemEatenException.class, () -> {
             cornChickenFox.move("Fox");
         });
+    }
+
+    @Test
+    void allow_winning_path_without_exception() throws ItemEatenException {
+        String[] winningPath = {"Chicken", "", "Fox", "Chicken", "Corn", "", "Chicken"};
+
+        for (String item : winningPath) {
+            cornChickenFox.move(item);
+        }
+
+        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        checkBank(originalBank);
+
+        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        checkBank(targetBank, "Farmer", "Fox", "Chicken", "Corn");
+    }
+
+    @Test
+    void allow_other_winning_path_without_exception() throws ItemEatenException {
+        String[] winningPath = {"Chicken", "", "Corn", "Chicken", "Fox", "", "Chicken"};
+
+        for (String item : winningPath) {
+            cornChickenFox.move(item);
+        }
+
+        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        checkBank(originalBank);
+
+        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        checkBank(targetBank, "Farmer", "Fox", "Chicken", "Corn");
     }
 
     private void checkBank(ArrayList<String> original, String... items) {
