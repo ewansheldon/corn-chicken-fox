@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CornChickenFoxShould {
 
@@ -30,7 +29,7 @@ public class CornChickenFoxShould {
     }
 
     @Test
-    void move_farmer_and_chicken_to_target_bank() {
+    void move_farmer_and_chicken_to_target_bank() throws ItemEatenException {
         cornChickenFox.move("Chicken");
 
         // Assert
@@ -43,7 +42,7 @@ public class CornChickenFoxShould {
     }
 
     @Test
-    void move_farmer_back_to_original_bank() {
+    void move_farmer_back_to_original_bank() throws ItemEatenException {
         cornChickenFox.move("Chicken");
         cornChickenFox.move(null);
 
@@ -59,5 +58,19 @@ public class CornChickenFoxShould {
         for (String item : items) {
             assertTrue(original.contains(item));
         }
+    }
+
+    @Test
+    void throw_exception_when_fox_and_chicken_together_without_farmer() {
+        assertThrows(ItemEatenException.class, () -> {
+            cornChickenFox.move("Corn");
+        });
+    }
+
+    @Test
+    void throw_exception_when_chicken_and_grain_together_without_farmer() {
+        assertThrows(ItemEatenException.class, () -> {
+            cornChickenFox.move("Fox");
+        });
     }
 }
