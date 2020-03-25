@@ -22,13 +22,32 @@ public class CornChickenFox {
     }
 
     public void move(String item) throws ItemEatenException {
-        if (originalBank.contains("Farmer"))
+        if (originalBank.contains("Farmer")) {
             moveToTarget(item);
-        else
+        } else {
             returnToOriginal(item);
+        }
 
         validateBanks();
     }
+
+  private void moveToTarget(String item) {
+    originalBank.remove("Farmer");
+    targetBank.add("Farmer");
+
+    originalBank.remove(item);
+    targetBank.add(item);
+  }
+
+  private void returnToOriginal(String item) {
+    targetBank.remove("Farmer");
+    originalBank.add("Farmer");
+
+    if (!item.isEmpty()) {
+      targetBank.remove(item);
+      originalBank.add(item);
+    }
+  }
 
     private void validateBanks() throws ItemEatenException {
         if (isDangerous(originalBank) || isDangerous(targetBank)) {
@@ -39,25 +58,7 @@ public class CornChickenFox {
     private boolean isDangerous(ArrayList<String> bank) {
         return !bank.contains("Farmer") &&
                 (bank.containsAll(Arrays.asList("Chicken", "Fox")) ||
-                 bank.containsAll(Arrays.asList("Chicken", "Corn")));
+                        bank.containsAll(Arrays.asList("Chicken", "Corn")));
 
-    }
-
-    private void returnToOriginal(String item) {
-        targetBank.remove("Farmer");
-        originalBank.add("Farmer");
-
-        if (!item.isEmpty()) {
-            targetBank.remove(item);
-            originalBank.add(item);
-        }
-    }
-
-    private void moveToTarget(String item) {
-        originalBank.remove("Farmer");
-        targetBank.add("Farmer");
-
-        originalBank.remove(item);
-        targetBank.add(item);
     }
 }
