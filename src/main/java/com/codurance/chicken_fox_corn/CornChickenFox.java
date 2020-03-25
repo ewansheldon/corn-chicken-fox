@@ -23,32 +23,24 @@ public class CornChickenFox {
 
     public boolean move(String item) throws ItemEatenException {
         if (originalBank.contains("Farmer")) {
-            moveToTarget(item);
+            moveToBank(originalBank, targetBank, item);
         } else {
-            returnToOriginal(item);
+            moveToBank(targetBank, originalBank, item);
         }
 
         return gameState();
     }
 
-    private void moveToTarget(String item) {
-        originalBank.remove("Farmer");
-        targetBank.add("Farmer");
-
-        originalBank.remove(item);
-        targetBank.add(item);
-    }
-
-    private void returnToOriginal(String item) {
-        targetBank.remove("Farmer");
-        originalBank.add("Farmer");
+    private void moveToBank(ArrayList<String> start, ArrayList<String> finish, String item) {
+        start.remove("Farmer");
+        finish.add("Farmer");
 
         if (!item.isEmpty()) {
-            targetBank.remove(item);
-            originalBank.add(item);
+            start.remove(item);
+            finish.add(item);
         }
     }
-
+2
     private boolean gameState() throws ItemEatenException {
         if (isDangerous(originalBank) || isDangerous(targetBank)) {
             throw new ItemEatenException();
