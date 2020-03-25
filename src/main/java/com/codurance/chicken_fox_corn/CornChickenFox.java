@@ -12,12 +12,12 @@ public class CornChickenFox {
         target = new Bank();
     }
 
-    public ArrayList<String> getOriginalBank() {
-        return original.getItems();
+    public Bank getOriginalBank() {
+        return original;
     }
 
-    public ArrayList<String> getTargetBank() {
-        return target.getItems();
+    public Bank getTargetBank() {
+        return target;
     }
 
     public boolean move(String item) throws ItemEatenException {

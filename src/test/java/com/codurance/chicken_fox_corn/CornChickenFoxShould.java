@@ -3,6 +3,7 @@ package com.codurance.chicken_fox_corn;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,10 +17,10 @@ public class CornChickenFoxShould {
 
     @Test
     void creates_full_original_bank_and_empty_target_bank() {
-        ArrayList<String> original = cornChickenFox.getOriginalBank();
+        Bank original = cornChickenFox.getOriginalBank();
         checkBank(original, "Farmer", "Chicken", "Corn", "Fox");
 
-        ArrayList<String> target = cornChickenFox.getTargetBank();
+        Bank target = cornChickenFox.getTargetBank();
         checkBank(target);
     }
 
@@ -27,10 +28,10 @@ public class CornChickenFoxShould {
     void move_farmer_and_chicken_to_target_bank() throws ItemEatenException {
         cornChickenFox.move("Chicken");
 
-        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        Bank originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank, "Corn", "Fox");
 
-        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        Bank targetBank = cornChickenFox.getTargetBank();
         checkBank(targetBank, "Farmer", "Chicken");
     }
 
@@ -44,10 +45,10 @@ public class CornChickenFoxShould {
         cornChickenFox.move("Chicken");
         cornChickenFox.move("");
 
-        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        Bank originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank, "Corn", "Fox", "Farmer");
 
-        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        Bank targetBank = cornChickenFox.getTargetBank();
         checkBank(targetBank, "Chicken");
     }
 
@@ -75,10 +76,10 @@ public class CornChickenFoxShould {
 
         assertTrue(cornChickenFox.move("Chicken"));
 
-        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        Bank originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank);
 
-        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        Bank targetBank = cornChickenFox.getTargetBank();
         checkBank(targetBank, "Farmer", "Fox", "Chicken", "Corn");
     }
 
@@ -92,17 +93,19 @@ public class CornChickenFoxShould {
 
         assertTrue(cornChickenFox.move("Chicken"));
 
-        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        Bank originalBank = cornChickenFox.getOriginalBank();
         checkBank(originalBank);
 
-        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+        Bank targetBank = cornChickenFox.getTargetBank();
         checkBank(targetBank, "Farmer", "Fox", "Chicken", "Corn");
     }
 
-    private void checkBank(ArrayList<String> original, String... items) {
-        assertEquals(items.length, original.size());
+    private void checkBank(Bank original, String... items) {
+        List<String> bankItems = original.getItems();
+
+        assertEquals(items.length, bankItems.size());
         for (String item : items) {
-            assertTrue(original.contains(item));
+            assertTrue(bankItems.contains(item));
         }
     }
 }
