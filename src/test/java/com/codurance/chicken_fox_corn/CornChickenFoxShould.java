@@ -25,5 +25,44 @@ public class CornChickenFoxShould {
         assertEquals(0, output.size());
     }
 
+    @Test
+    void move_farmer_and_chicken_to_target_bank() {
+        // Arrange
+        CornChickenFox cornChickenFox = new CornChickenFox();
+        // Act
+        cornChickenFox.move("Chicken");
 
+        // Assert
+        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+
+        assertEquals(2, originalBank.size());
+        assertTrue(originalBank.contains("Corn"));
+        assertTrue(originalBank.contains("Fox"));
+
+        assertEquals(2, targetBank.size());
+        assertTrue(targetBank.contains("Farmer"));
+        assertTrue(targetBank.contains("Chicken"));
+    }
+
+    @Test
+    void move_farmer_back_to_original_bank() {
+        // Arrange
+        CornChickenFox cornChickenFox = new CornChickenFox();
+        // Act
+        cornChickenFox.move("Chicken");
+        cornChickenFox.move(null);
+
+        // Assert
+        ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
+        ArrayList<String> targetBank = cornChickenFox.getTargetBank();
+
+        assertEquals(3, originalBank.size());
+        assertTrue(originalBank.contains("Corn"));
+        assertTrue(originalBank.contains("Fox"));
+        assertTrue(originalBank.contains("Farmer"));
+
+        assertEquals(1, targetBank.size());
+        assertTrue(targetBank.contains("Chicken"));
+    }
 }
