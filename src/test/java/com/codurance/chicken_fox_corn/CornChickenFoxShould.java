@@ -8,61 +8,56 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CornChickenFoxShould {
+
+    private final CornChickenFox cornChickenFox;
+
+    public CornChickenFoxShould() {
+        cornChickenFox = new CornChickenFox();
+    }
+
     @Test
     void creates_full_original_bank() {
-        ArrayList<String> output = new CornChickenFox().getOriginalBank();
+        ArrayList<String> original = cornChickenFox.getOriginalBank();
 
-        assertEquals(4, output.size());
-        assertTrue(output.contains("Farmer"));
-        assertTrue(output.contains("Chicken"));
-        assertTrue(output.contains("Corn"));
-        assertTrue(output.contains("Fox"));
+        checkBank(original, "Farmer", "Chicken", "Corn", "Fox");
     }
 
     @Test
     void creates_empty_target_bank() {
-        ArrayList<String> output = new CornChickenFox().getTargetBank();
-        assertEquals(0, output.size());
+        ArrayList<String> target = cornChickenFox.getTargetBank();
+
+        checkBank(target);
     }
 
     @Test
     void move_farmer_and_chicken_to_target_bank() {
-        // Arrange
-        CornChickenFox cornChickenFox = new CornChickenFox();
-        // Act
         cornChickenFox.move("Chicken");
 
         // Assert
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
         ArrayList<String> targetBank = cornChickenFox.getTargetBank();
 
-        assertEquals(2, originalBank.size());
-        assertTrue(originalBank.contains("Corn"));
-        assertTrue(originalBank.contains("Fox"));
+        checkBank(originalBank, "Corn", "Fox");
 
-        assertEquals(2, targetBank.size());
-        assertTrue(targetBank.contains("Farmer"));
-        assertTrue(targetBank.contains("Chicken"));
+        checkBank(targetBank, "Farmer", "Chicken");
     }
 
     @Test
     void move_farmer_back_to_original_bank() {
-        // Arrange
-        CornChickenFox cornChickenFox = new CornChickenFox();
-        // Act
-      cornChickenFox.move("Chicken");
+        cornChickenFox.move("Chicken");
         cornChickenFox.move(null);
 
-        // Assert
         ArrayList<String> originalBank = cornChickenFox.getOriginalBank();
         ArrayList<String> targetBank = cornChickenFox.getTargetBank();
 
-      assertEquals(3, originalBank.size());
-        assertTrue(originalBank.contains("Corn"));
-        assertTrue(originalBank.contains("Fox"));
-        assertTrue(originalBank.contains("Farmer"));
+        checkBank(originalBank, "Corn", "Fox", "Farmer");
+        checkBank(targetBank, "Chicken");
+    }
 
-        assertEquals(1, targetBank.size());
-        assertTrue(targetBank.contains("Chicken"));
+    private void checkBank(ArrayList<String> original, String... items) {
+        assertEquals(items.length, original.size());
+        for (String item : items) {
+            assertTrue(original.contains(item));
+        }
     }
 }
